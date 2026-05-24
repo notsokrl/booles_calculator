@@ -1,7 +1,113 @@
-/* =========================
-   GLOBAL STYLES
-========================= */
+/* =====================================================
+   MODERN GLASSMORPHISM UI - FIXED & THEMED
+===================================================== */
 
+/* --- Global Styles --- */
+html {
+    scroll-behavior: smooth; /* Enables smooth scrolling when clicking nav links */
+}
+
+/* =========================
+   1. THEME VARIABLES
+========================= */
+:root {
+    /* --- Dark Mode (Default) --- */
+    --bg-main: linear-gradient(135deg, #0f172a, #1e293b, #0f0c29);
+    --text-main: #f8fafc;
+    --text-soft: #cbd5e1;
+    
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --card-bg-solid: #1e293b; /* For results card in dark */
+    
+    --primary: #38bdf8;
+    --secondary: #6366f1;
+    --success: #22c55e;
+    --table-text: #38bdf8;
+    --step-bg: rgba(15, 23, 42, 0.6);
+    --math-text: #ffffff;
+
+     --heading-color: #38bdf8; /* Bright Sky Blue */
+     --text-bold: #38bdf8;
+}
+h1, h2, h3, strong {
+    color: var(--heading-color) !important;
+    transition: color 0.4s ease;
+    /* Reset any previous gradients if they exist */
+    background: none !important;
+    -webkit-text-fill-color: initial !important; 
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* Optional: Add a subtle glow to headings in Dark Mode */
+body:not(.light-mode) h1, 
+body:not(.light-mode) h2 {
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+body.light-mode {
+    /* --- Light Mode Overrides --- */
+    --bg-main: linear-gradient(135deg, #e0eafc, #cfdef3, #ffffff);
+    --text-main: #1e293b;
+    --text-soft: #475569;
+    
+    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --card-bg-solid: #ffffff;
+    
+    --primary: #0284c7;
+    --secondary: #4f46e5;
+    --table-text: #2563eb;
+    --step-bg: #f8fafc;
+    --math-text: #000000;
+
+    --heading-color: #38bdf8; /* Bright Sky Blue */
+    --text-bold: #38bdf8;
+}
+
+/* --- Navbar Links Styling --- */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide links on small screens or use a burger menu */
+    }
+    .nav-container {
+        padding: 0 15px;
+    }
+}
+
+/* Ensure Section Anchors account for the Sticky Header */
+section {
+    scroll-margin-top: 100px;
+}
+
+/* =========================
+   2. GLOBAL RESET & BODY
+========================= */
 * {
     margin: 0;
     padding: 0;
@@ -10,455 +116,197 @@
 
 body {
     min-height: 100vh;
-    padding: 30px 20px;
-
-    background:
-        radial-gradient(circle at top left, #3b82f6 0%, transparent 30%),
-        radial-gradient(circle at bottom right, #8b5cf6 0%, transparent 30%),
-        linear-gradient(135deg, #0f172a, #111827, #1e293b);
-
-    color: #f8fafc;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
+    background: var(--bg-main) !important;
+    background-attachment: fixed !important;
+    color: var(--text-main);
+    transition: background 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
 }
-
-/* =========================
-   CONTAINER
-========================= */
 
 .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: auto;
+    padding: 20px;
 }
 
 /* =========================
-   GLASS CARD
+   3. GLASS NAVIGATION (Fixed)
 ========================= */
+.glass-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 0;
+    margin-bottom: 30px;
+}
 
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { font-size: 2rem; font-weight: 800; color: var(--primary); }
+.logo-text { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+.logo-text span { color: var(--primary); }
+
+#theme-toggle {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    width: 42px; height: 42px; border-radius: 10px;
+    cursor: pointer; position: relative; overflow: hidden;
+    color: var(--text-main);
+}
+
+.icon { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: 0.4s; }
+body.light-mode .sun { transform: translate(-50%, 50px); }
+body:not(.light-mode) .moon { transform: translate(-50%, 50px); }
+
+/* =========================
+   4. GLASS COMPONENTS
+========================= */
 .glass {
-    background: rgba(255, 255, 255, 0.08);
-
+    background: var(--glass-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-
-    border-radius: 22px;
-
-    padding: 30px;
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px;
     margin-bottom: 25px;
-
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.35),
-        inset 0 1px 1px rgba(255,255,255,0.08);
-
-    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
 
-.glass:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 12px 35px rgba(0,0,0,0.45),
-        inset 0 1px 1px rgba(255,255,255,0.08);
+.results-card {
+    background: var(--card-bg-solid); /* Swaps between white and dark slate */
+    color: var(--text-main);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 
 /* =========================
-   TITLES
+   5. INPUTS & BUTTONS
 ========================= */
+.input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+label { font-weight: 600; color: var(--text-soft); }
 
-h1, h2, h3 {
-    margin-bottom: 15px;
-    font-weight: 700;
+input, select {
+    width: 100%; padding: 12px; border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.9);
+    color: #111827; font-size: 1rem;
 }
-
-h1 {
-    font-size: 2.5rem;
-    background: linear-gradient(to right, #38bdf8, #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-h2 {
-    color: #cbd5e1;
-}
-
-p {
-    color: #d1d5db;
-}
-
-/* =========================
-   INPUTS
-========================= */
-
-.input-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
-    margin-top: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #e2e8f0;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 14px 16px;
-
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
-
-    background: rgba(255,255,255,0.92);
-
-    color: #111827;
-    font-size: 1rem;
-
-    transition: all 0.25s ease;
-}
-
-input:focus,
-select:focus {
-    outline: none;
-
-    border-color: #38bdf8;
-
-    box-shadow:
-        0 0 0 4px rgba(56,189,248,0.2);
-
-    transform: scale(1.01);
-}
-
-/* =========================
-   BUTTONS
-========================= */
 
 .main-btn {
-    width: 100%;
-    margin-top: 25px;
-    padding: 15px;
-
-    border: none;
-    border-radius: 14px;
-
-    background: linear-gradient(135deg, #38bdf8, #6366f1);
-
-    color: white;
-    font-size: 1.05rem;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-
-    box-shadow:
-        0 6px 20px rgba(59,130,246,0.4);
+    width: 100%; padding: 15px; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white; font-weight: 700; cursor: pointer; margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
 }
 
-.main-btn:hover {
-    transform: translateY(-3px);
-
-    background: linear-gradient(135deg, #0ea5e9, #4f46e5);
-
-    box-shadow:
-        0 10px 25px rgba(59,130,246,0.5);
-}
-
-.main-btn:active {
-    transform: scale(0.98);
-}
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
+.button-group { display: flex; gap: 10px; margin-top: 15px; }
 .sec-btn {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border);
+    background: var(--glass-bg); color: var(--text-main); cursor: pointer;
 }
 
-
-/* Mobile Responsive adjustment */
-@media (max-width: 500px) {
-    .button-group {
-        flex-direction: column;
-    }
-}
-
-/* PDF BUTTON */
-
-.pdf-btn {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-
-    color: white;
-
-    border: none;
-    border-radius: 10px;
+/* =========================
+   6. STEPS & TABLES
+========================= */
+.step-box {
+    background: var(--glass-bg); /* Use the theme variable */
+    border-left: 5px solid var(--primary);
+    padding: 20px;
+    border-radius: 15px;
     margin-bottom: 20px;
+    border: 1px solid var(--glass-border);
+}
 
-    padding: 12px 20px;
+.math-scroll, .math-line { 
+    color: var(--math-text); 
+    overflow-x: auto; 
+}
 
+table { width: 100%; border-radius: 12px; overflow: hidden; margin-top: 15px; }
+th { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 12px; }
+td { 
+    padding: 10px; text-align: center; 
+    color: var(--table-text) !important; 
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.02);
+}
+
+/* =========================
+   7. EXAMPLES SECTION
+========================= */
+.example-box {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 20px; border-radius: 15px; margin-bottom: 20px;
+}
+
+.example-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    background: var(--primary); color: white; font-size: 0.8rem; font-weight: 700;
+}
+
+.final-val {
+    padding: 12px; border-radius: 10px; margin-top: 10px;
+    background: rgba(34, 197, 94, 0.15);
+    border-left: 5px solid var(--success);
+    color: var(--success); font-weight: 700;
+}
+
+/* =========================
+   PDF DOWNLOAD BUTTON
+========================= */
+.pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ef4444, #b91c1c); /* Red Gradient */
+    color: white !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
     cursor: pointer;
-    font-weight: 600;
-
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    margin-bottom: 20px;
 }
 
 .pdf-btn:hover {
     transform: translateY(-2px);
-
-    box-shadow:
-        0 6px 15px rgba(239,68,68,0.4);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+    filter: brightness(1.1);
 }
+
+.pdf-btn:active {
+    transform: scale(0.95);
+}
+
+
 
 /* =========================
-   RESULTS CARD
+   8. MISC
 ========================= */
+.highlight { font-size: 2rem; font-weight: 800; color: var(--success); display: block; margin: 10px 0; }
 
-.results-card {
-    background: rgba(255,255,255,0.96);
-
-    color: #111827;
-
-    border-radius: 20px;
-
-    padding: 30px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.25);
-}
-
-/* =========================
-   STEP BOX
-========================= */
-
-.step-box {
-    position: relative;
-
-    margin-bottom: 25px;
-    padding: 20px 20px 20px 25px;
-
-    border-radius: 14px;
-
-    background: #f8fafc;
-
-    border-left: 5px solid #38bdf8;
-
-    box-shadow:
-        0 4px 12px rgba(0,0,0,0.08);
-}
-
-.step-box h3 {
-    color: #0f172a;
-}
-
-.step-box p {
-    color: #334155;
-}
-
-/* =========================
-   TABLES
-========================= */
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-
-    margin-top: 20px;
-
-    overflow: hidden;
-    border-radius: 12px;
-
-    background: white;
-}
-
-th {
-    background: linear-gradient(135deg, #38bdf8, #6366f1);
-
-    color: white;
-
-    padding: 14px;
-
-    font-weight: 700;
-}
-
-td {
-    padding: 12px;
-
-    border-bottom: 1px solid #e5e7eb;
-
-    text-align: center;
-
-    color: #1f2937;
-}
-
-tr:hover {
-    background: #f1f5f9;
-}
-
-/* =========================
-   CHART
-========================= */
-
-.chart-wrapper {
-    height: 400px;
-    width: 100%;
-
-    margin-top: 25px;
-
-    background: rgba(255,255,255,0.08);
-
-    border-radius: 18px;
-
-    padding: 15px;
-}
-
-/* =========================
-   HIGHLIGHT RESULT
-========================= */
-
-.highlight {
-    display: inline-block;
-
-    margin-top: 15px;
-
-    font-size: 2rem;
-    font-weight: 800;
-
-    color: #22c55e;
-
-    text-shadow:
-        0 0 10px rgba(34,197,94,0.4);
-}
-
-/* =========================
-   SCROLLBAR
-========================= */
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #111827;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(#38bdf8, #6366f1);
-    border-radius: 10px;
-}
-
-/* =========================
-   NOTES CARD (MATHEMATICAL NOTES)
-========================= */
-
-.notes-card {
-    position: relative;
-}
-
-/* Title inside notes card */
-.notes-card h3 {
-    font-size: 1.4rem;
-    color: #e0f2fe;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Optional subtle icon effect (if you add one later) */
-.notes-card h3::before {
-    content: "📘";
-    font-size: 1.2rem;
-}
-
-/* Paragraph styling */
-.notes-card p {
-    color: #cbd5e1;
-    margin-bottom: 15px;
-    font-size: 0.98rem;
-}
-
-/* List styling */
-.notes-card ul {
-    list-style: none;
-    padding-left: 0;
-    margin-top: 10px;
-}
-
-/* List items */
-.notes-card li {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    border-radius: 12px;
-
-    color: #e5e7eb;
-    font-size: 0.95rem;
-
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Hover effect */
-.notes-card li:hover {
-    transform: translateX(5px);
-    background: rgba(56, 189, 248, 0.08);
-    border-color: rgba(56, 189, 248, 0.25);
-}
-
-/* Strong labels inside list */
-.notes-card li strong {
-    color: #38bdf8;
-}
-
-/* Subtle left accent line */
-.notes-card li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 3px;
-    background: linear-gradient(to bottom, #38bdf8, #6366f1);
-    opacity: 0.8;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
 @media (max-width: 768px) {
-
-    body {
-        padding: 20px 12px;
-    }
-
-    .glass,
-    .results-card {
-        padding: 22px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    .highlight {
-        font-size: 1.5rem;
-    }
-
-    .main-btn {
-        padding: 14px;
-    }
+    .input-grid { grid-template-columns: 1fr; }
+    .button-group { flex-direction: column; }
 }

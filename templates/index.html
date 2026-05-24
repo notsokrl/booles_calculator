@@ -11,23 +11,161 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <nav class="glass-nav">
+        <div class="nav-container">
+            <!-- Logo Section -->
+            <div class="logo">
+                <div class="logo-icon">∫</div>
+                <div class="logo-text">Boole<span>Calc</span></div>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="#discussion">Discussion</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#calculator">Calculator</a></li>
+            </ul>
+
+            <!-- Theme Toggle -->
+            <div class="theme-switch-wrapper">
+                <button id="theme-toggle" title="Toggle Light/Dark Mode">
+                    <span class="icon sun">☀️</span>
+                    <span class="icon moon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
+        <!-- HEADER -->
         <header class="glass">
             <h1>Boole's Rule Integration</h1>
             <p>Complete Step-by-Step Numerical Solver</p>
         </header>
 
-        <section class="card notes-card glass">
-            <h3>Mathematical Notes</h3>
-            <p>Boole's Rule is a 4th-order Newton-Cotes formula used to approximate definite integrals using 5 points.</p>
-            <ul>
-                <li><strong>Formula:</strong> \( \frac{2h}{45} [7f_0 + 32f_1 + 12f_2 + 32f_3 + 7f_4] \)</li>
-                <li><strong>h Value:</strong> \( (b-a)/4 \)</li>
-                <li><strong>Accuracy:</strong> Exact for polynomials of degree \(\leq 5\).</li>
-            </ul>
+        <!-- SECTION 1: DISCUSSION -->
+        <section id="discussion" class="card notes-card glass">
+    <h2>Mathematical Discussion</h2>
+    
+    <div class="step-box">
+        <h3>1. Theoretical Foundation</h3>
+        <p>Boole’s Rule is a member of the <strong>Newton-Cotes</strong> family of numerical integration. While the Trapezoidal rule uses straight lines and Simpson’s rule uses parabolas, Boole’s Rule uses a <strong>fourth-degree polynomial</strong> to approximate the integrand.</p>
+    </div>
+
+    <div class="step-box">
+        <h3>2. Why use Boole's Rule?</h3>
+        <p>Boole's rule is chosen when high precision is required. It is exact for any polynomial of degree 5 or less. The error term is proportional to \(h^7\), meaning if you halve the step size, the error decreases by a factor of \(2^7 = 128\).</p>
+    </div>
+
+    <div class="step-box">
+    <h3>3. Error Analysis</h3>
+    <p>Boole's error formula provides the theoretical bound or exact residual error when approximating a definite integral using Boole's Rule. It is typically expressed as:</p>
+    
+    <div class="math-line">
+        <h2>\[ E = -\frac{8}{945} f^{(6)}(\xi)h^7 \]</h2>
+    </div>
+
+    <p>Where:</p>
+    <ul>
+        <li><strong>\( h \)</strong> is the interval width evaluated as \( \frac{b-a}{n} \).</li>
+        <li><strong>\( n \)</strong> is the number of sub-intervals (which must be a multiple of 4).</li>
+        <li><strong>\( f^{(6)}(\xi) \)</strong> is the sixth derivative of the function being integrated, evaluated at some unknown point \( \xi \) in the interval \( (a, b) \).</li>
+    </ul>
+    
+  
+</div>
+
+    <div class="step-box">
+        <h3>4. Comparison with Other Rules</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rule</th>
+                    <th>Points</th>
+                    <th>Polynomial Degree</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Trapezoidal</td><td>2</td><td>1st (Linear)</td></tr>
+                <tr><td>Simpson's 1/3</td><td>3</td><td>2nd (Quadratic)</td></tr>
+                <tr><td>Boole's</td><td>5</td><td>4th (Quartic)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="step-box">
+        <h3>5. Constraints</h3>
+        <p>To apply Boole's Rule, the following must be true:</p>
+        <ul>
+            <li>The function must be <strong>continuous</strong> on the interval [a, b].</li>
+            <li>The interval must be divided into exactly <strong>4 equal sub-intervals</strong> (requiring 5 total points).</li>
+        </ul>
+    </div>
+</section>
+
+        <!-- SECTION 2: EXAMPLES -->
+        <section id="examples" class="card glass examples-section">
+            <div class="header-with-icon">
+                <h2>Step-by-Step Worked Examples</h2>
+            </div>
+
+            <!-- Example 1 -->
+            <div class="example-box">
+                <div class="example-badge">Example 1: Polynomial</div>
+                <h3>Evaluate: \( \int_{0}^{4} x^2 \, dx \)</h3>
+                <div class="example-steps">
+                    <p><strong>Step 1: Identify limits and calculate \( h \)</strong></p>
+                    <p>Lower limit \( a = 0 \), Upper limit \( b = 4 \).<br>
+                       \( h = \frac{b - a}{4} = \frac{4 - 0}{4} = 1 \)</p>
+                    <p><strong>Step 2: Generate coordinate table</strong></p>
+                    <table>
+                        <tr><th>\( i \)</th><th>\( x_i \)</th><th>\( f(x_i) = x^2 \)</th></tr>
+                        <tr><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>1</td><td>1</td><td>1</td></tr>
+                        <tr><td>2</td><td>2</td><td>4</td></tr>
+                        <tr><td>3</td><td>3</td><td>9</td></tr>
+                        <tr><td>4</td><td>4</td><td>16</td></tr>
+                    </table>
+                    <p><strong>Step 3: Apply Boole's Formula</strong></p>
+                    <div class="math-scroll">
+                        \[ I \approx \frac{2h}{45} [7f_0 + 32f_1 + 12f_2 + 32f_3 + 7f_4] \]
+                        \[ I \approx \frac{2(1)}{45} [7(0) + 32(1) + 12(4) + 32(9) + 7(16)] \]
+                        \[ I \approx \frac{2}{45} [480] = 21.3333 \]
+                    </div>
+                    <p class="final-val">Result: \( I \approx 21.3333 \)</p>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Example 2 -->
+            <div class="example-box">
+                <div class="example-badge">Example 2: Trigonometric</div>
+                <h3>Evaluate: \( \int_{0}^{\pi} \sin(x) \, dx \)</h3>
+                <div class="example-steps">
+                    <p><strong>Step 1: Calculate \( h \)</strong></p>
+                    <p>\( h = \frac{\pi - 0}{4} \approx 0.7854 \)</p>
+                    <p><strong>Step 2: Function Values</strong></p>
+                    <table>
+                        <tr><th>\( i \)</th><th>\( x_i \)</th><th>\( f(x_i) = \sin(x) \)</th></tr>
+                        <tr><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>1</td><td>\( \pi/4 \)</td><td>0.7071</td></tr>
+                        <tr><td>2</td><td>\( \pi/2 \)</td><td>1.0000</td></tr>
+                        <tr><td>3</td><td>\( 3\pi/4 \)</td><td>0.7071</td></tr>
+                        <tr><td>4</td><td>\( \pi \)</td><td>0</td></tr>
+                    </table>
+                    <p><strong>Step 3: Solve</strong></p>
+                    <div class="math-scroll">
+                        \[ I \approx 0.0349 [22.627 + 12 + 22.627] \approx 1.9986 \]
+                    </div>
+                    <p class="final-val">Result: \( I \approx 1.9986 \)</p>
+                </div>
+            </div>
         </section>
 
-        <section class="card glass">
+        <!-- SECTION 3: CALCULATOR -->
+        <section id="calculator" class="card glass">
+            <h2>Interactive Calculator</h2>
             <div class="input-box">
                 <label>Function \( f(x) \)</label>
                 <input type="text" id="func-input" placeholder="e.g. 1/x+1" value="1/x+1">
@@ -43,14 +181,18 @@
                 </div>
             </div>
             <button id="calc-btn" class="main-btn">Calculate Now</button>
-            <button id="clear-btn" class="main-btn clear">Clear All</button>
+            
+            
+                <button id="clear-btn" class="main-btn"> Clear All</button>
+            
         </section>
 
+        <!-- RESULTS AREA -->
         <div id="results-area" style="display:none;">
             <section class="card results-card">
                 <div class="results-header">
                     <h2>Solution Breakdown</h2>
-                    <button id="download-pdf" class="pdf-btn">Download PDF Report</button>
+                    <button id="download-pdf" class="pdf-btn">Download Result</button>
                 </div>
                 <div id="steps-output"></div>
                 <div class="chart-wrapper">
@@ -58,8 +200,6 @@
                 </div>
             </section>
         </div>
-
-        
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>

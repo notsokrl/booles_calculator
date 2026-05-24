@@ -1,6 +1,40 @@
 let chartInstance = null;
 let lastData = null;
 
+// --- THEME TOGGLE LOGIC ---
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Check for saved theme in localStorage
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    body.classList.add('light-mode');
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    
+    // Save preference
+    if (body.classList.contains('light-mode')) {
+        localStorage.setItem('theme', 'light');
+    } else {
+        localStorage.setItem('theme', 'dark');
+    }
+
+    // Optional: Update Chart colors if light mode is active
+    if (chartInstance) {
+        updateChartTheme();
+    }
+});
+
+// Update chart colors dynamically when theme changes
+function updateChartTheme() {
+    const isLight = body.classList.contains('light-mode');
+    chartInstance.options.scales.x.ticks.color = isLight ? '#1e293b' : '#ffffff';
+    chartInstance.options.scales.y.ticks.color = isLight ? '#1e293b' : '#ffffff';
+    chartInstance.update();
+}
+
 document.getElementById('calc-btn').addEventListener('click', async () => {
     const payload = {
         function: document.getElementById('func-input').value,
@@ -103,3 +137,4 @@ document.getElementById('download-pdf').addEventListener('click', () => {
 
     doc.save("Boole_Rule_Report.pdf");
 });
+
