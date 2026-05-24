@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boole's Rule Integration Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="glass">
+            <h1>Boole's Rule Integration</h1>
+            <p>Complete Step-by-Step Numerical Solver</p>
+        </header>
+
+        <section class="card notes-card glass">
+            <h3>Mathematical Notes</h3>
+            <p>Boole's Rule is a 4th-order Newton-Cotes formula used to approximate definite integrals using 5 points.</p>
+            <ul>
+                <li><strong>Formula:</strong> \( \frac{2h}{45} [7f_0 + 32f_1 + 12f_2 + 32f_3 + 7f_4] \)</li>
+                <li><strong>h Value:</strong> \( (b-a)/4 \)</li>
+                <li><strong>Accuracy:</strong> Exact for polynomials of degree \(\leq 5\).</li>
+            </ul>
+        </section>
+
+        <section class="card glass">
+            <div class="input-box">
+                <label>Function \( f(x) \)</label>
+                <input type="text" id="func-input" placeholder="e.g. 1/x+1" value="1/x+1">
+            </div>
+            <div class="input-grid">
+                <div><label>Lower (a)</label><input type="number" id="lower-a" value="0"></div>
+                <div><label>Upper (b)</label><input type="number" id="upper-b" value="4"></div>
+                <div><label>Precision</label>
+                    <select id="precision">
+                        <option value="4" selected>4 Decimals</option>
+                        <option value="6">6 Decimals</option>
+                    </select>
+                </div>
+            </div>
+            <button id="calc-btn" class="main-btn">Calculate Now</button>
+            <button id="clear-btn" class="main-btn clear">Clear All</button>
+        </section>
+
+        <div id="results-area" style="display:none;">
+            <section class="card results-card">
+                <div class="results-header">
+                    <h2>Solution Breakdown</h2>
+                    <button id="download-pdf" class="pdf-btn">Download PDF Report</button>
+                </div>
+                <div id="steps-output"></div>
+                <div class="chart-wrapper">
+                    <canvas id="integrationChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
